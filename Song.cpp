@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <string>
-#include "Song.h"
+#include "HEADERS/Song.h"
 
 
 void Song::setSongInfo(string inTitle, string inArtist, string inDuration, string inDate, string inTime, string inExplicit){
