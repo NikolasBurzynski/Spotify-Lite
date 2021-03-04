@@ -1,4 +1,4 @@
 # CA2
 
-## Full Name: 
-## BU userid:
+## Full Name: Nikolas Burzynski 
+## BU userid: nburzyn1
