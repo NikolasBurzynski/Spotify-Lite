@@ -10,4 +10,7 @@ class Song{
     public:
         void setSongInfo(string, string, string, string, string, string);
         void toString();    
+
+    friend bool operator==(const Song&, const Song&);
 };
+

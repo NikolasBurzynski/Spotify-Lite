@@ -21,13 +21,16 @@ scrub: clean
 run: $(EXECUTABLE)
 	./$(EXECUTABLE)
 
-main.exe:	Song.o main.o Library.o
-	g++ Song.o main.o Library.o -o main.exe
+main.exe:	Song.o main.o Library.o Playlist.o
+	g++ Song.o main.o Library.o Playlist.o -o main.exe
 
 Song.o:	HEADERS/Song.h Song.cpp 
 	g++ -c Song.cpp 
 
-Library.o:	HEADERS/Song.h HEADERS/Library.h Library.cpp 
+Playlist.o: HEADERS/Song.h Playlist.cpp
+	g++ -c Playlist.cpp
+
+Library.o:	HEADERS/Song.h HEADERS/Library.h HEADERS/Playlist.h Library.cpp 
 	g++ -c Library.cpp 
 
 main.o: main.cpp 

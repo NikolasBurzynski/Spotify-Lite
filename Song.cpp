@@ -16,3 +16,12 @@ void Song::setSongInfo(string inTitle, string inArtist, string inDuration, strin
 void Song::toString(){
     cout << title << " "<< artist << " E:" << Explicit << " " << duration << " " << time << " " << date << endl;
 }
+
+bool operator==(const Song & songA, const Song & songB){
+    if(songA.title.compare(songB.title) == 0){
+        return true;
+    }else{
+        return false;
+    }
+
+}

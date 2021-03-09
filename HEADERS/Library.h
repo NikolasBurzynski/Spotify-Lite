@@ -11,10 +11,12 @@ class Library{
         void printLibrary();
         void addSong(Song);
         void addPlaylist(string);
+        void showPlaylists();
         int numSongs; 
+        int numPlaylists;
         int maxSongs;  
         ~Library();
     private:
         Song * songList;
-        Playlist * list_of_playlists;
+        Playlist * playlists;
 };

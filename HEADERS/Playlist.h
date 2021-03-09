@@ -7,12 +7,15 @@ class Playlist{
     public:
         Playlist(string);
         ~Playlist();
-        Playlist(Playlist);
-        void show();
+        Playlist(const Playlist &);
+        int numSongs;
+        void showSongs();
+        void printDetails();
         void addSong(Song);
-        void removeSong(Song);
+        void removeSong(string title);
 
     private:
         string name, createDate, createTime;
+        Song * songList;
 
-}
+};
