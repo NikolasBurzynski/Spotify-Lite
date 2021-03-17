@@ -5,17 +5,28 @@
 
 class Playlist{
     public:
+        Playlist();
         Playlist(string);
-        ~Playlist();
         Playlist(const Playlist &);
-        int numSongs;
-        void showSongs();
-        void printDetails();
+        string getName();
+        void setName(string);
+        int getMaxSongs();
+        int getNumSongs();
+        Song getSong(int);
+        bool containsSong(Song);
+        void printSongs();
         void addSong(Song);
-        void removeSong(string title);
+        void removeSong(string);
+        void calculateTotalTime();
+        friend ostream& operator<< (ostream&, const Playlist&);
 
     private:
-        string name, createDate, createTime;
+        int numSongs;
+        int maxSongs;
+        int numMins;
+        int numSecs;
+        string name, createTime;
         Song * songList;
+        
 
 };

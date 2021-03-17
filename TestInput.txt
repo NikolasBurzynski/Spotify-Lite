@@ -1,0 +1,35 @@
+add song
+TNT
+ACDC
+03:35
+no
+add song
+Detroit
+KISS
+05:40
+no
+add song
+BOP
+Dababy
+03:34
+yes
+add playlist List1
+add playlist List2
+select playlist List1
+remove playlist List2
+show playlists
+add song BOP
+select playlist List1
+add song BOP
+add song Detroit
+add song TNT
+show playlist
+show songs
+select playlist List1
+remove song Detroit
+select playlist List1
+show playlist
+remove song hello
+show playlists
+show songs
+exit

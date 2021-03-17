@@ -21,11 +21,14 @@ scrub: clean
 run: $(EXECUTABLE)
 	./$(EXECUTABLE)
 
-main.exe:	Song.o main.o Library.o Playlist.o
-	g++ Song.o main.o Library.o Playlist.o -o main.exe
+main.exe:	Song.o main.o Library.o Playlist.o Timestamp.o
+	g++ Song.o main.o Library.o Playlist.o Timestamp.o -o main.exe
 
-Song.o:	HEADERS/Song.h Song.cpp 
+Song.o:	HEADERS/Song.h HEADERS/Timestamp.h Song.cpp 
 	g++ -c Song.cpp 
+
+Timestamp.o: HEADERS/Timestamp.h Timestamp.cpp
+	g++ -c Timestamp.cpp
 
 Playlist.o: HEADERS/Song.h Playlist.cpp
 	g++ -c Playlist.cpp
