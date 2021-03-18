@@ -162,7 +162,6 @@ void Library::removePlaylist(string name){
                 if(j != numPlaylists - 1){
                     playlists[j] = playlists[j+1];
                 }else{
-                    // playlists[j].~Playlist();
                     if(numPlaylists != 0) numPlaylists--;
                     return;
                 }
