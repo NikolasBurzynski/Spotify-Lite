@@ -15,9 +15,11 @@ class Playlist{
         int getNumSongs();
         Song getSong(int);
         bool containsSong(Song);
+        bool containsSong(string);
         void findSong(string);
         void printSongs();
         void addSong(Song);
+        void growPlaylist();
         void removeSong(string);
         void calculateTotalTime();
         Playlist& operator+=(Song);

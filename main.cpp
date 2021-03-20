@@ -135,13 +135,15 @@ int UI(){
     if(op.compare("select") == 0){
         if(arg1.compare("library") == 0){
             currentPlaylist = "LIBRARY";
-            cout << "Selected Library" << endl;
+            // cout << "Selected Library" << endl;
         }else if(arg1.compare("playlist") == 0){
             size_t found = arg2.find(" ");
             if(found != std::string::npos) arg2 = arg2.substr(0,found);
             bool exists = library.containsPlaylist(arg2);
-            if(exists){currentPlaylist = arg2;}
-            else{
+            if(exists){
+                currentPlaylist = arg2;
+                cout << currentPlaylist << endl;
+            }else{
                 cout << "\"" << arg2 << "\" is not a playlist" << endl; 
             }
         }else{
@@ -154,94 +156,95 @@ int UI(){
         }else if(arg1.compare("playlist") == 0){
             addNewPlaylist(arg2);
             cout << currentPlaylist << endl;
+        }else if(arg1.compare("song") == 0 && arg2.length() != 0){
+            if(library.containsSong(arg2)){
+                // cout << "Found Song" << endl;
+                if(currentPlaylist.compare("LIBRARY") == 0){
+                    cout << "Please select a playlist first" << endl;
+                    return 0;
+                }
+                library.addSongtoPlaylist(library.getSong(arg2), currentPlaylist);
+                cout << "Added song to playlist: " << currentPlaylist << endl;
+            }else{
+                cout << "\"" << arg2 << "\"" << " is not in your library." << endl;
+            }
+        }else{
+            invalidInputError(arg1);
         }
-    }//else if(arg1.compare("song") == 0 && arg2.length() != 0){
-    //         if(library.containsSong(arg2)){
-    //             cout << "Found Song" << endl;
-    //             if(currentPlaylist.compare("LIBRARY") == 0){
-    //                 cout << "Please select a playlist first" << endl;
-    //                 return 0;
-    //             }
-    //             library.addSongtoPlaylist(library.getSong(arg2), currentPlaylist);
-    //             cout << "Added song to playlist: " << currentPlaylist << endl;
-    //         }else{
-    //             cout << "\"" << arg2 << "\"" << " is not in your library." << endl;
-    //         }
-    //     }else{
-    //         invalidInputError(arg1);
-    //     }
-    //     return 0;
-    // else if(op.compare("remove") == 0){
-    //     if(arg1.compare("song") == 0){
-    //         if(currentPlaylist.compare("LIBRARY") == 0){
-    //             if(library.containsSong(arg2)){
-    //                 library.removeSong(arg2);
-    //                 cout << "Song Removed" << endl;
-    //             }else{
-    //                 cout << "Song: " << "\"" << arg2 << "\"" << "is not in your library." << endl;
-    //                 return 0;
-    //             }
-    //         }else{
-    //             library.removeSongfromPlaylist(arg2, currentPlaylist);
-    //             cout << "Song Removed" << endl;
-    //         }
-    //     }else if(arg1.compare("playlist")==0){
-    //         if(arg2.compare("") == 0){
-    //             if(currentPlaylist.compare("LIBRARY") == 0){
-    //                 library.removePlaylist(currentPlaylist);
-    //                 currentPlaylist = "LIBRARY";
-    //             }else{
-    //                 cout << "Cannot remove Library" << endl;
-    //                 return 0;
-    //             }
-    //         }
-    //         else{
-    //             if(library.containsPlaylist(arg2)){
-    //                 library.removePlaylist(arg2);
-    //                 currentPlaylist = "LIBRARY";
-    //             }else{
-    //                 cout << "Playlist " << "\"" << arg2 << "\"" << " does not exist.";
-    //                 return 0;
-    //             }
-    //         }
-    //     }
-    //     else{
-    //         invalidInputError(arg1);
-    //     }
-    //     return 0;
-    // }else if(op.compare("show") == 0){
-    //     if(arg1.compare("playlists") == 0){
-    //         library.showPlaylists();
-    //     }else if(arg1.compare("song") == 0){
-    //         if(currentPlaylist.compare("LIBRARY") == 0){
-    //             if(!library.containsSong(arg2)){
-    //                 cout << "Library does not contain: " << arg2 << endl;
-    //                 return 0;
-    //             }
-    //             library.getSong(arg2).toString();
-    //         }else{
-    //             library.printSongfromPlaylist(currentPlaylist, arg2);
-    //         }
-    //     }else if (arg1.compare("songs") == 0){
-    //         library.printLibrary();
-    //     }else if (arg1.compare("playlist") == 0){
-    //         if(arg2.compare("") == 0){
-    //             if(currentPlaylist.compare("LIBRARY") != 0){
-    //                 library.printPlaylist(currentPlaylist);
-    //             }else{
-    //                 cout << "Please select a playlist" << endl;
-    //             }
-    //         }else{
-    //             if(library.containsPlaylist(arg2)){
-    //                 library.printPlaylist(arg2);
-    //             }else{
-    //                 cout << "Playlist " << "\"" << arg2 << "\"" << " does not exist.";
-    //                 return 0;
-    //             }
-    //         }
-    //     }
-    //     return 0;
-    // }else if(op.compare("clone") == 0){
+        return 0;
+    }
+            
+    else if(op.compare("remove") == 0){
+        if(arg1.compare("song") == 0){
+            if(currentPlaylist.compare("LIBRARY") == 0){
+                if(library.containsSong(arg2)){
+                    library.removeSong(arg2);
+                    cout << "Song Removed" << endl;
+                }else{
+                    cout << "Song: " << "\"" << arg2 << "\"" << "is not in your library." << endl;
+                    return 0;
+                }
+            }else{
+                library.removeSongfromPlaylist(arg2, currentPlaylist);
+            }
+            return 0;
+        }else if(arg1.compare("playlist")==0){
+            if(arg2.compare("") == 0){
+                if(currentPlaylist.compare("LIBRARY") != 0){
+                    library.removePlaylist(currentPlaylist);
+                    currentPlaylist = "LIBRARY";
+                }else{
+                    cout << "Cannot remove Library" << endl;
+                    return 0;
+                }
+            }else{
+                if(library.containsPlaylist(arg2)){
+                    library.removePlaylist(arg2);
+                    currentPlaylist = "LIBRARY";
+                }else{
+                    cout << "Playlist " << "\"" << arg2 << "\"" << " does not exist.";
+                    return 0;
+                }
+            }
+        }
+        else{
+            invalidInputError(arg1);
+        }
+        return 0;
+    }else if(op.compare("show") == 0){
+        if(arg1.compare("playlists") == 0){
+            library.showPlaylists();
+        }else if(arg1.compare("song") == 0){
+            if(currentPlaylist.compare("LIBRARY") == 0){
+                if(!library.containsSong(arg2)){
+                    cout << "Library does not contain: " << arg2 << endl;
+                    return 0;
+                }
+                library.getSong(arg2).toString();
+            }else{
+                library.printSongfromPlaylist(currentPlaylist, arg2);
+            }
+        }else if (arg1.compare("songs") == 0){
+            library.printLibrary();
+        }else if (arg1.compare("playlist") == 0){
+            if(arg2.compare("") == 0){
+                if(currentPlaylist.compare("LIBRARY") != 0){
+                    library.printPlaylist(currentPlaylist);
+                }else{
+                    cout << "Please select a playlist" << endl;
+                }
+            }else{
+                if(library.containsPlaylist(arg2)){
+                    library.printPlaylist(arg2);
+                }else{
+                    cout << "Playlist " << "\"" << arg2 << "\"" << " does not exist.";
+                    return 0;
+                }
+            }
+        }
+        return 0;
+    }
+    //else if(op.compare("clone") == 0){
     //     if(currentPlaylist.compare("LIBRARY") == 0){
     //         cout << "No playlist selected" << endl;
     //         return 0;

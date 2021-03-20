@@ -6,7 +6,7 @@
 #include "HEADERS/Playlist.h"
 
 Library::Library(){ //Blank Constructor
-    cout << "Library Empty Constructor" << endl;
+    // cout << "Library Empty Constructor" << endl;
     numSongs = 0;
     numPlaylists = 0;
     maxSongs = 1;
@@ -16,14 +16,14 @@ Library::Library(){ //Blank Constructor
 }
 
 Library::Library(const int inMaxSongs, const int inMaxPlaylists){
-    cout << "Library Value Constructor" << endl;
+    // cout << "Library Value Constructor" << endl;
     numSongs = 0;
     numPlaylists = 0;
     maxSongs = inMaxSongs;
     maxPlaylists = inMaxPlaylists;
     songList = new Song[maxSongs];
     playlists = new Playlist[maxPlaylists];
-    cout << numPlaylists << endl;
+    // cout << numPlaylists << endl;
 }
 
 void Library::printLibrary(){
@@ -32,14 +32,56 @@ void Library::printLibrary(){
     }
 }
 
+Song Library::getSong(string title){
+    for(int i = 0; i < numSongs; i++){
+        if(songList[i].getTitle().compare(title) == 0){
+            return songList[i];
+        }
+    }
+    // cout << "Never Called" << endl;
+    return Song();
+}
+
 bool Library::containsPlaylist(string name){
-    cout << "Checking Playlists" << endl;
+    // cout << "Checking Playlists" << endl;
     for(int i = 0; i < numPlaylists; i++){
         if(playlists[i].getName().compare(name) == 0){
             return true;
         }
     }
     return false;
+}
+
+bool Library::containsSong(string title){
+    // cout << "Looking for Song" << endl;
+    for(int i = 0; i < numSongs; i++){
+        if(songList[i].getTitle().compare(title) == 0){
+            return true;
+        }
+    }
+    return false;
+}
+
+void Library::removeSong(string title){
+    for(int i = 0; i < numSongs; i++){
+        if(songList[i].getTitle().compare(title) == 0){ //Remove this song
+            //Take the last song and put it in this spot and then reduce Num songs
+            songList[i] = songList[numSongs-1];
+            numSongs--;
+            break;
+        }
+    }
+}
+
+void Library::removePlaylist(string name){
+    for(int i = 0; i < numPlaylists; i++){
+        if(playlists[i].getName().compare(name) == 0){
+            playlists[i] = playlists[numPlaylists - 1];
+            numPlaylists--;
+            cout << "playlist removed!" << endl;
+            break;
+        }
+    }
 }
 
 bool Library::containsSong(Song song){
@@ -52,9 +94,9 @@ bool Library::containsSong(Song song){
 }
 
 void Library::addSong(Song newSong){
-    cout << "Adding new Song" << endl;
+    // cout << "Adding new Song" << endl;
     if(numSongs == maxSongs){
-        cout << "Need to Grow" << endl;
+        // cout << "Need to Grow" << endl;
         growLibrary();
     }
     songList[numSongs] = newSong;
@@ -73,9 +115,9 @@ void Library::growLibrary(){
 }
 
 void Library::addPlaylist(string name){
-    Playlist playlist = Playlist(name);
+    Playlist playlist(name);
     if(numPlaylists == maxPlaylists){
-        cout << "Need to expand playlists" << endl;
+        // cout << "Need to expand playlists" << endl;
         growPlaylists();
     }
     playlists[numPlaylists] = playlist; //Assignment Operator
@@ -90,6 +132,24 @@ void Library::growPlaylists(){
     delete[] playlists;
     playlists = tmpPlaylists;
     maxPlaylists *= 2;
+}
+
+void Library::addSongtoPlaylist(Song song, string playlistName){
+    for(int i = 0; i < numPlaylists; i++){
+        if(playlists[i].getName().compare(playlistName) == 0){
+            playlists[i].addSong(song);
+            break;
+        }
+    }
+}
+
+void Library::removeSongfromPlaylist(string songTitle, string playlistName){
+    for(int i = 0; i < numPlaylists; i++){
+        if(playlists[i].getName().compare(playlistName) == 0){
+            playlists[i].removeSong(songTitle);
+            break;
+        }
+    }
 }
 
 Library::~Library(){

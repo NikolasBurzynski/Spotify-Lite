@@ -6,31 +6,31 @@
 #include <math.h>
 
 Playlist::Playlist(){
-    cout << "Playlist Empty Constructor" << endl;
-    int numSongs = 0;
-    int maxSongs = 1;
-    int numMins = 0;
-    int numSecs = 0;
+    // cout << "Playlist Empty Constructor" << endl;
+    numSongs = 0;
+    maxSongs = 1;
+    numMins = 0;
+    numSecs = 0;
     Timestamp addTime = Timestamp();
     createTime = addTime.toString();
-    string name = "";
+    name = "";
     songList = new Song[maxSongs];
 }
 
 Playlist::Playlist(string inName){
-    cout << "Playlist Value Constructor" << endl;
-    int numSongs = 0;
-    int maxSongs = 1;
-    int numMins = 0;
-    int numSecs = 0;
+    // cout << "Playlist Value Constructor" << endl;
+    numSongs = 0;
+    maxSongs = 1;
+    numMins = 0;
+    numSecs = 0;
     Timestamp addTime = Timestamp();
     createTime = addTime.toString();
-    string name = inName;
+    name = inName;
     songList = new Song[maxSongs];
 }
 
 Playlist::Playlist(const Playlist & source){
-    cout << "Playlist Copy Constructor" << endl;
+    // cout << "Playlist Copy Constructor" << endl;
     numSongs = source.numSongs;
     maxSongs = source.maxSongs;
     numMins = source.numMins;
@@ -48,7 +48,7 @@ string Playlist::getName(){
 }
 
 Playlist& Playlist::operator=(const Playlist & source){
-    cout << "Playlist Assignment Called" << endl;
+    // cout << "Playlist Assignment Called" << endl;
     if(this != &source){
         numSongs = source.numSongs;
         maxSongs = source.maxSongs;
@@ -57,8 +57,6 @@ Playlist& Playlist::operator=(const Playlist & source){
         createTime = source.createTime;
         name = source.name;
         Song * tmpList = new Song[maxSongs];
-        cout << "Source NumSongs" << source.numSongs << endl;
-        cout << "NumSongs " << numSongs << endl;
         for(int i = 0; i < numSongs; i++){
             songList[i] = source.songList[i];
         }
@@ -66,6 +64,49 @@ Playlist& Playlist::operator=(const Playlist & source){
         songList = tmpList;
     }
     return *this;
+}
+
+void Playlist::growPlaylist(){
+    Song * newSongList = new Song[maxSongs * 2];
+    for(int i = 0; i < numSongs; i++){
+        newSongList[i] = songList[i];
+    }
+    delete[] songList;
+    songList = newSongList;
+    maxSongs *= 2;
+}
+
+void Playlist::addSong(Song song){
+    if(numSongs == maxSongs){
+        cout << "Need to Expand Playlist" << endl;
+        growPlaylist();
+    }
+    songList[numSongs] = song;
+    numSongs++;
+}
+
+void Playlist::removeSong(string songTitle){
+    if(containsSong(songTitle)){
+        for(int i = 0; i < numSongs; i++){
+            if(songList[i].getTitle().compare(songTitle) == 0){ //remove this song
+                songList[i] = songList[numSongs - 1];
+                cout << "Song Removed" << endl;
+                numSongs--;
+                break;
+            }
+        }
+    }else{
+        cout << songTitle << " is not in this playlist" << endl;
+    }
+}
+
+bool Playlist::containsSong(string title){
+    for(int i = 0; i < numSongs; i++){
+        if(songList[i].getTitle().compare(title) == 0){
+            return true;
+        }
+    }
+    return false;
 }
 
 
