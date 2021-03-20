@@ -7,6 +7,7 @@
 
 class Library{
     public:
+        Library();
         Library(const int, const int);
         void printLibrary();
         void addSong(Song);
@@ -25,8 +26,12 @@ class Library{
         void removeSongfromPlaylist(string, string);
         void removePlaylist(string);
         void clonePlaylist(string, string);
+        void importPlaylist(string, string);
+        void growLibrary();
+        void growPlaylists();
+        void printSongfromPlaylist(string, string);
         ~Library();
-        friend void operator+=(const Library& , string);
+
     private:
         int numSongs; 
         int numPlaylists;

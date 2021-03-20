@@ -36,7 +36,7 @@ Playlist.o: HEADERS/Song.h Playlist.cpp
 Library.o:	HEADERS/Song.h HEADERS/Library.h HEADERS/Playlist.h Library.cpp 
 	g++ -c Library.cpp 
 
-main.o: main.cpp 
+main.o: HEADERS/Song.h HEADERS/Library.h HEADERS/Playlist.h main.cpp 
 	g++ -c main.cpp
 
 # Specify the object files and executables that are generated

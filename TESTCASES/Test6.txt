@@ -1,0 +1,33 @@
+add song
+Song 1
+Artist 1
+00:01
+y
+00:00:01
+01/01/2000
+add song
+Song 2
+Artist 2
+00:02
+n
+00:00:02
+02/02/2000
+add song
+Song 3
+Artist 3
+00:03
+y
+00:00:03
+03/03/2000
+add playlist Playlist1
+add song Song 1
+add song Song 2
+add playlist Playlist2
+add song Song 2
+add song Song 3
+select playlist Playlist1
+clone Playlist3
+select playlist Playlist3
+import Playlist2
+show playlist Playlist3
+exit

@@ -2,25 +2,42 @@
 #include <stdlib.h>
 #include <string>
 #include "HEADERS/Song.h"
+using namespace std;
 
-Song::Song(){}
+Song::Song(){
+    // cout << "Song Empty Constructor" << endl;
+    title = "";
+    artist = "";
+    duration = "";
+    Explicit = "";
+    month = "";
+    day = "";
+    year = "";
+    time = "";
+}
 
-void Song::setSongInfo(string inTitle, string inArtist, string inDuration, string inExplicit){
+Song::Song(string inTitle, string inArtist, string inDuration, string inExplicit, string inMonth, string inDay, string inYear, string inTime){
+    cout << "Song Value Constructor" << endl;
     title = inTitle;
     artist = inArtist;
     duration = inDuration;
     Explicit = inExplicit;
-    Timestamp addTime = Timestamp();
-    timestamp = addTime.toString();
-
+    month = inMonth;
+    day = inDay;
+    year = inYear;
+    time = inTime;
 }
 
-Song::Song(const Song& source){
+Song::Song(const Song & source){
+    cout << "Song Copy Constructor" << endl;
     title = source.title;
     artist = source.artist;
     duration = source.duration;
     Explicit = source.Explicit;
-    timestamp = source.timestamp;
+    month = source.month;
+    day = source.day;
+    year = source.year;
+    time = source.time;
 }
 
 int Song::getMins(){
@@ -40,7 +57,7 @@ string Song::getTitle(){
 }
 
 void Song::toString(){
-    cout << title << " "<< artist << " E:" << Explicit << " " << timestamp << endl;
+    cout << title << " "<< artist << " E:" << Explicit << " Duration " << duration << " Date Created: " << month << "/" << day << "/" << year << " Time Created: " << time << endl;
 }
 
 bool operator==(const Song & songA, const Song & songB){
@@ -49,5 +66,4 @@ bool operator==(const Song & songA, const Song & songB){
     }else{
         return false;
     }
-
 }

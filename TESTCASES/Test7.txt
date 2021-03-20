@@ -1,0 +1,9 @@
+add song\nSong 1\nArtist 1\n00:01\ny\n00:00:01\n01/01/2000
+add song\nSong 2\nArtist 2\n00:02\nn\n00:00:02\n02/02/2000
+add playlist Playlist1
+add playlist Playlist2\nadd song Song 1
+add playlist Playlist3\nadd song Song 2
+select playlist Playlist1
+import Playlist2 Playlist3
+show playlist Playlist1
+exit
