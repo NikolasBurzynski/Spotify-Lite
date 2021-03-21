@@ -34,6 +34,7 @@ void addNewPlaylist(string arg2){
         playlistName = arg2;
     }
     if(!library.containsPlaylist(playlistName)){
+        cout << "Adding playlist" << endl;
         library.addPlaylist(playlistName);
         currentPlaylist = playlistName;
     }else{
@@ -98,20 +99,20 @@ void addNewSong(){
     }
 }
 
-// void import(string command){
-//     std::stringstream is;
-//     is.str(command);
-//     string temp;
-//     is >> temp; //throw import away
-//     while(is >> temp){
-//         if(library.containsPlaylist(temp)){
-//             library.importPlaylist(temp, currentPlaylist);
-//         }else{
-//             cout << temp << " is not a playlist";
-//         }
-//     }
+void import(string command){
+    std::stringstream is;
+    is.str(command);
+    string arg;
+    is >> arg; //throw import away
+    while(is >> arg){
+        if(library.containsPlaylist(arg)){
+            library.importPlaylist(arg, currentPlaylist);
+        }else{
+            cout << arg << " is not a playlist";
+        }
+    }
 
-// }
+}
 
 int UI(){
     string line;
@@ -119,12 +120,12 @@ int UI(){
     while(line.compare("") == 0){
         getline(cin, line);
     }
-    // cout << line << endl;
-    // if(line.substr(0,6).compare("import") == 0){
-    //     import(line);
-    //     cout << "Import Finished" << endl;
-    //     return 0;
-    // }
+    cout << line << endl;
+    if(line.substr(0,6).compare("import") == 0){
+        import(line);
+        cout << "Import Finished" << endl;
+        return 0;
+    }
     Parser command(line);
     string op = command.getOperation();
     string arg1 = command.getArg1();
@@ -244,17 +245,18 @@ int UI(){
         }
         return 0;
     }
-    //else if(op.compare("clone") == 0){
-    //     if(currentPlaylist.compare("LIBRARY") == 0){
-    //         cout << "No playlist selected" << endl;
-    //         return 0;
-    //     }
-    //     if(arg1.compare("") == 0){
-    //         cout << "Invalid Syntax" << endl;
-    //     }else{
-    //         library.clonePlaylist(currentPlaylist, arg1);
-    //     }
-    //     return 0;
+    else if(op.compare("clone") == 0){
+        if(currentPlaylist.compare("LIBRARY") == 0){
+            cout << "No playlist selected" << endl;
+            return 0;
+        }
+        if(arg1.compare("") == 0){
+            cout << "Invalid Syntax" << endl;
+        }else{
+            library.clonePlaylist(currentPlaylist, arg1);
+        }
+        return 0;
+    }
     else if(op.compare("exit") == 0){
         return 1;
     }else{

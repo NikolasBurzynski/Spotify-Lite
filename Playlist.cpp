@@ -18,7 +18,7 @@ Playlist::Playlist(){
 }
 
 Playlist::Playlist(string inName){
-    // cout << "Playlist Value Constructor" << endl;
+    cout << "Playlist Value Constructor" << endl;
     numSongs = 0;
     maxSongs = 1;
     numMins = 0;
@@ -58,7 +58,7 @@ Playlist& Playlist::operator=(const Playlist & source){
         name = source.name;
         Song * tmpList = new Song[maxSongs];
         for(int i = 0; i < numSongs; i++){
-            songList[i] = source.songList[i];
+            tmpList[i] = source.songList[i];
         }
         delete[] songList;
         songList = tmpList;
@@ -108,7 +108,64 @@ bool Playlist::containsSong(string title){
     }
     return false;
 }
+bool Playlist::containsSong(Song song){
+    for(int i = 0; i < numSongs; i++){
+        if(songList[i] == song){
+            return true;
+        }
+    }
+    return false;
+}
 
+void Playlist::setName(string newName){
+    name = newName;
+}
+
+void Playlist::printSongs(){
+    numMins = 0;
+    numSecs = 0;
+    for(int i = 0; i < numSongs; i++){
+        songList[i].toString();
+        numMins += songList[i].getMins();
+        numSecs += songList[i].getSecs();
+        int multiples = floor(numSecs / 60.0);
+        numMins += multiples;
+        numSecs -= multiples * 60;
+    }
+    cout << "Total Playlist Duration: " << numMins << " minutes and " << numSecs << " seconds" << endl;
+}
+
+int Playlist::getNumSongs(){
+    return numSongs;
+}
+
+Playlist& Playlist::operator+=(Song addedSong){
+    addSong(addedSong);
+    return *this;
+}
+
+Song Playlist::getSong(int i){
+    Song song(songList[i]);
+    return song;
+}
+
+
+void Playlist::printSong(string title){
+    if(containsSong(title)){
+        for(int i = 0; i < numSongs; i++){
+            if(songList[i].getTitle().compare(title) == 0){
+                songList[i].toString();
+            }
+        }
+    }else{
+        cout << "Playlist does not contain " << title << endl;
+    }
+}
+
+ostream& operator<<(ostream& out, const Playlist& p){
+    out << "Playlist Title: " << p.name << " Creation Timestamp: " << p.createTime;
+    return out;
+}
 
 
 Playlist::~Playlist(){
